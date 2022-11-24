@@ -7,5 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class tiket extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'nama_tiket','deskripsi','tanggal','lokasi'
+    ];
+
+    public function kategori()
+    {
+        return $this->hasMany(kategori::class, 'id_tiket','id');
+    }
 }

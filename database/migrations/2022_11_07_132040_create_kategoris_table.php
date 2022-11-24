@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTiketsTable extends Migration
+class CreateKategorisTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateTiketsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tikets', function (Blueprint $table) {
-            $table->id('id');
-            $table->string('nama_tiket');
-            $table->string('deskripsi');
-            $table->date('tanggal');
-            $table->string('lokasi');
+        Schema::create('kategoris', function (Blueprint $table) {
+            $table->id();
+            $table->integer("id_tiket");
+            $table->string("nama_kategori");
+            $table->string("harga");
+            $table->string("stok");
+            $table->string("deskripsi");
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateTiketsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tikets');
+        Schema::dropIfExists('kategoris');
     }
 }
