@@ -124,7 +124,66 @@ class pesanan_controller extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        $id_user = Auth::id();
+        $user = pesanan::where('id_user',$id_user)->first();
+        if($user){
+            $kategori = kategori::where('id', $request->id_kategori)->first();
+                if($kategori){
+                    if($kategori->stok == 0){
+                        return response()->json([
+                            'success' => 401,
+                            'message' => "Stok Habis, Pesanan gagal disimpan", 
+                        ],
+                        404  
+                            );
+                    } else{
+                        $pesanan = pesanan::where('id', $id)->first();
+                        $pesanan->id_kategori = $request->id_kategori ? $request->id_kategori : $pesanan->id_kategori;
+                        $pesanan->stok = $request->stok ? $request->stok : $pesanan->stok;
+                        $pesanan->save();
+
+                        $stok = $pesanan->stok;
+                        $requeststok = $request->stok;
+
+                        if($stok > $requeststok ){
+                            $kategori = kategori::where('id', $request->id_kategori)->first();
+                                if($kategori){
+                                    $jmlhPesan = $requeststok - $stok;
+                                    $kategori->stok = (($kategori->stok) - ($jmlhPesan));
+                                    $kategori->save();
+                                }
+                        } 
+                        elseif($stok < $requeststok){
+                            if($kategori){
+                                $jmlhPesan = $stok - $requeststok;
+                                $kategori->stok = (($kategori->stok) + ($jmlhPesan));
+                                $kategori->save();
+                            }
+                        }
+                        
+
+                        return response()->json([
+                            'success' => 201,
+                            'message' => "Data Pesanan berhasil diupdate", 
+                            'data' => $pesanan
+                        ],
+                          201  
+                            );
+                    }
+                        
+                    } else {
+                        return response()->json([
+                            'status' => 404,
+                            'message' => "Data kategori tidak ditemukan", 
+                        ], 404);
+                    }
+        }
+        else {
+            return response()->json([
+                'status' => 401,
+                'message' => "Data user tidak valid", 
+            ], 401);
+        }
     }
 
     /**
