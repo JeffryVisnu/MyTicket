@@ -42,19 +42,21 @@ Route::middleware(['auth:sanctum','abilities:admin'])->group(function () {
     //PEMBAYARAN
     Route::get('pembayarans',[pembayaran_controller::class,'index']);
     Route::get('pembayaran/{id}',[pembayaran_controller::class,'show']);
-    Route::delete('pembayaran/{id}',[pembayaran_controller::class,'destroy']);
 
     //PESANAN
     Route::get('pesanan/status/1',[pesanan_controller::class,'getStatusSudahBayar']);
     Route::get('pesanan/status/0',[pesanan_controller::class,'getStatusBelumBayar']);
 
     //ACCOUNT
-    Route::get('users',[user_controller::class,'getAllUser']);
     Route::get('admins',[admincontroller::class,'getAllAdmin']);
     Route::put('admin',[admincontroller::Class,'updateProfile'])->middleware(['auth:sanctum','abilities:admin']);
     Route::delete('admin',[admincontroller::Class,'deleteAccount'])->middleware(['auth:sanctum','abilities:admin']);
     Route::get('admin',[admincontroller::Class,'getAdmin'])->middleware(['auth:sanctum','abilities:admin']);
     Route::post('admin/logout',[admincontroller::Class,'logout'])->middleware(['auth:sanctum','abilities:admin']);
+
+    //USER
+    Route::put('user/{id',[user_controller::class,'updateProfile']);
+    Route::get('users',[user_controller::class,'getAllUser']);
 });
 
 //USER
@@ -69,7 +71,7 @@ Route::middleware(['auth:sanctum','abilities:user'])->group(function() {
     
     //PEMBAYARAN
     Route::post('pembayaran',[pembayaran_controller::class,'store'])->middleware(['auth:sanctum','abilities:user']);
-    Route::get('pembayaranByUser', [pembayaran_controller::class, 'getByUser'])->middleware(['auth:sanctum','abilities:user']);
+    Route::get('pembayaran/user', [pembayaran_controller::class, 'getByUser'])->middleware(['auth:sanctum','abilities:user']);
 
     //ACCOUNT
     Route::put('user',[user_controller::class,'updateProfile'])->middleware(['auth:sanctum','abilities:user']);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\pembayaran;
 use App\Models\pesanan;
+use Auth;
 
 class pembayaran_controller extends Controller
 {
@@ -42,9 +43,10 @@ class pembayaran_controller extends Controller
             $date = date('Y-m-d');
             $table = pembayaran::create([
                 'id_pesanan' => $request->id_pesanan,
-                'tanggal_pembayaran' => $request->tanggal_pembayaran,
+                'tanggal_pembayaran' => $date,
                 'metode_pembayaran' => $request->metode_pembayaran
             ]);
+            $kode = mt_rand(1000,9999);
             $pesanan->status = 1;
             $pesanan->save();
             return response()->json([

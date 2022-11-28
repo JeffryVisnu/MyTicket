@@ -124,22 +124,7 @@ class pesanan_controller extends Controller
      */
     public function update(Request $request, $id)
     {
-        $pesanan = pesanan::where('id', $id)->first();
-        if($pesanan){
-            $pesanan->id_kategori = $request->id_kategori ? $request -> id_kategori : $pesanan -> id_kategori;
-            $pesanan->tanggal_pemesanan = $request->tanggal_pemesanan ? $request -> tanggal_pemesanan : $pesanan -> tanggal_pemesanan;
-            $pesanan->save();
-            return response()->json([
-                'status' => 200,
-                'message' => 'Data kategori berhasil diubah',
-                'data' => $pesanan
-            ], 200);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'Data dengan id ' . $id . ' tidak ditemukan'
-            ], 404);
-        }
+        
     }
 
     /**
@@ -181,6 +166,16 @@ class pesanan_controller extends Controller
             return response()->json([
                 'status' => 401,
                 'message' => 'Data pesanan tidak di temukan'
+            ], 401);
+        }
+    }
+
+    public function getStatusBelumBayar(){
+        $pesanan = pesanan::where('status', 0)->get();
+        if($pesanan){
+            return response()->json([
+                'status' => 401,
+                'message' => "Data pesanan tidak di temukan"
             ], 401);
         }
     }
