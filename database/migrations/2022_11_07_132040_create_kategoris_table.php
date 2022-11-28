@@ -17,8 +17,8 @@ class CreateKategorisTable extends Migration
             $table->id();
             $table->integer("id_tiket");
             $table->string("nama_kategori");
-            $table->string("harga");
-            $table->string("stok");
+            $table->integer("harga");
+            $table->integer("stok");
             $table->string("deskripsi");
             $table->timestamps();
         });

@@ -56,7 +56,6 @@ class AdminController extends Controller
         $fields = $request->validate([
             'first_name' => 'required|string|max:100',
             'last_name' => 'required|string|max:100',
-            'username' => 'required|string|max:100',
             'no_hp' => 'required|string|max:100',
             'alamat' => 'required|string|max:100',
             'email' => 'required|string|unique:users,email',
@@ -68,7 +67,6 @@ class AdminController extends Controller
         $user = Admin::create([
             'first_name' => $fields['first_name'],
             'last_name' => $fields['last_name'],
-            'username' => $fields['username'],
             'email'=> $fields['email'],
             'no_hp' => $fields['no_hp'],
             'alamat' => $fields['alamat'],
@@ -92,7 +90,6 @@ class AdminController extends Controller
         if($user){
             $user->first_name = $request->first_name ? $request->first_name : $user->first_name;
             $user->last_name = $request->last_name ? $request->last_name : $user->last_name;
-            $user->username = $request->username ? $request->username : $user->username;
             $user->email = $request->email ? $request->email : $user->email;
             $user->no_hp = $request->no_hp ? $request->no_hp : $user->no_hp;
             $user->alamat = $request->alamat ? $request->alamat : $user->alamat;

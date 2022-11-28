@@ -11,7 +11,7 @@ use App\Models\tiket;
 class pesanan extends Model
 {
     protected $fillable = [
-        'id_user','id_kategori','tanggal_pemesanan','metode_pembayaran'
+        'id_user','id_kategori','tanggal_pemesanan','stok','total_harga','status'
     ];
 
     public function user()

@@ -18,7 +18,9 @@ class CreatePesanansTable extends Migration
             $table->integer("id_user");
             $table->integer("id_kategori");
             $table->date("tanggal_pemesanan");
-            $table->string("metode_pembayaran");
+            $table->integer("stok");
+            $table->integer("total_harga");
+            $table->string("status");
             $table->timestamps();
         });
     }

@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\pesanan;
-
-class detail_pesanan extends Model
+class pembayaran extends Model
 {
     protected $fillable = [
-        'id_pesanan','jumlah_tiket','harga','total_harga','kode_pemesanan'
+        'id_pesanan','tanggal_pembayaran','metode_pembayaran'
     ];
 
     public function pesanan()
     {
-        return $this->belongsTo(pesanan::class, 'id_pesanan','id');
+        return $this->belongsTo(pesanan::class, 'id_pesanan', 'id');
     }
 }
+

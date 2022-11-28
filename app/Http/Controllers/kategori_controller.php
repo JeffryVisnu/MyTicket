@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\kategori;
+use App\Models\tiket;
 
 class kategori_controller extends Controller
 {
@@ -14,7 +15,7 @@ class kategori_controller extends Controller
      */
     public function index()
     {
-        $kategori = kategori::get();
+        $kategori = kategori::with('pesanan')->get();
         return $kategori;
     }
 
@@ -36,6 +37,8 @@ class kategori_controller extends Controller
      */
     public function store(Request $request)
     {
+        $tiket = tiket::where('id', $request->id_tiket)->first();
+        if($tiket){
         $table = kategori::create([
             "id_tiket" => $request->id_tiket,
             "nama_kategori" => $request->nama_kategori,
@@ -46,12 +49,18 @@ class kategori_controller extends Controller
 
         return response()->json([
             'success' => 201,
-            'message' => 'Data kategori berhasil di tambahkan',
+            'message' => 'Berhasil menambahkan data tiket',
             'data' => $table
         ],
         201);
-    }
+    } else {
+        return response()->json([
+            'success' => 401,
+            'message' => 'Gagal menemukan data tiket',
+        ]);
 
+    }
+    }
     /**
      * Display the specified resource.
      *
